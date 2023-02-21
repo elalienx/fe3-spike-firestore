@@ -2,34 +2,40 @@
 import { useEffect, useState } from "react";
 
 // Project files
-import ItemStudent from "./components/ItemStudent";
-import { readDocuments } from "./scripts/firebaseSetup";
+import { readDocuments } from "./scripts/fireStore";
+import StudentsPage from "./pages/StudentsPage";
 
 export default function App() {
   // Local state
+  const [status, setStatus] = useState(0); // 0: loading, 1: ready, 2: error
   const [data, setData] = useState([]);
 
   // Methods
   useEffect(() => {
-    loadData();
+    loadData("students");
   }, []);
 
-  async function loadData() {
-    const data = await readDocuments();
+  async function loadData(collectionName) {
+    const data = await readDocuments(collectionName).catch(onFail);
 
-    setData(data);
+    onSuccess(data);
   }
 
-  // Components
-  const Items = data.map((item) => <ItemStudent key={item.id} item={item} />);
+  function onSuccess(data) {
+    setData(data);
+    setStatus(1);
+  }
+
+  function onFail() {
+    setStatus(2);
+  }
 
   return (
     <div className="App">
       <h1>Firebase Cloud Firestore</h1>
-      <section>
-        <h2>Students</h2>
-        {Items}
-      </section>
+      {status === 0 && <p>Loading... ⏲️</p>}
+      {status === 1 && <StudentsPage data={data} />}
+      {status === 2 && <p>Error ❌</p>}
     </div>
   );
 }
