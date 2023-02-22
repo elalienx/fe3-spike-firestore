@@ -27,13 +27,7 @@ export async function readDocument(collectionName, documentId) {
 export async function readDocuments(collectionName) {
   const reference = collection(database, collectionName);
   const snapshot = await getDocs(reference);
-  const result = [];
-
-  snapshot.forEach((doc) => {
-    const document = { id: doc.id, ...doc.data() };
-
-    result.push(document);
-  });
+  const result = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
 
   return result;
 }
