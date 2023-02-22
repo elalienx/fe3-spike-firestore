@@ -1,7 +1,7 @@
 // Project files
 import Formulary from "../components/Formulary";
 import ItemStudent from "../components/ItemStudent";
-import { createDocument } from "../scripts/fireStore";
+import { createDocument, deleteDocument } from "../scripts/fireStore";
 
 export default function StudentsPage({ state }) {
   const [students, setStudents] = state;

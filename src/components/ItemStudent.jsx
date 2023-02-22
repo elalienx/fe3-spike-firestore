@@ -13,7 +13,7 @@ export default function ItemStudent({ item, onDelete }) {
         <li>Iteration #{iteration}</li>
         <li>Is hired? {showHired}</li>
       </ul>
-      <button onClick={onDelete(id)}>delete</button>
+      <button onClick={() => onDelete(id)}>delete</button>
     </article>
   );
 }
