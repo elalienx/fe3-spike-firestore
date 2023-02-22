@@ -1,5 +1,5 @@
-export default function ItemStudent({ item }) {
-  const { name, iteration, hired } = item;
+export default function ItemStudent({ item, onDelete }) {
+  const { id, name, iteration, hired } = item;
 
   // Properties
   const showHired = hired
@@ -13,6 +13,7 @@ export default function ItemStudent({ item }) {
         <li>Iteration #{iteration}</li>
         <li>Is hired? {showHired}</li>
       </ul>
+      <button onClick={onDelete(id)}>delete</button>
     </article>
   );
 }
