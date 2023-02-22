@@ -1,14 +1,18 @@
 // Project files
 import Formulary from "../components/Formulary";
 import ItemStudent from "../components/ItemStudent";
-import { createDocument, deleteDocument } from "../scripts/fireStore";
+import {
+  createDocument,
+  updateDocument,
+  deleteDocument,
+} from "../scripts/fireStore";
 
 export default function StudentsPage({ state }) {
   const [students, setStudents] = state;
 
   // Components
   const Items = students.map((item) => (
-    <ItemStudent key={item.id} item={item} onDelete={onDelete} />
+    <ItemStudent key={item.id} item={item} actions={[onUpdate, onDelete]} />
   ));
 
   async function onCreate(data) {
@@ -19,13 +23,24 @@ export default function StudentsPage({ state }) {
     setStudents(result);
   }
 
-  async function onDelete(id) {
-    await deleteDocument("students", id);
+  async function onUpdate(newData) {
+    const id = newData.id;
+    const clonedStudents = [...students];
+    const itemIndex = clonedStudents.findIndex((item) => item.id === id);
 
+    clonedStudents[itemIndex] = newData;
+
+    await updateDocument("students", newData);
+    setStudents(clonedStudents);
+  }
+
+  async function onDelete(id) {
     const clonedStudents = [...students];
     const itemIndex = clonedStudents.findIndex((item) => item.id === id);
 
     clonedStudents.splice(itemIndex, 1);
+
+    await deleteDocument("students", id);
     setStudents(clonedStudents);
   }
 

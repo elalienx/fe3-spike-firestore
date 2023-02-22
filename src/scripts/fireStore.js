@@ -1,6 +1,6 @@
 // Node modules
-import { collection, doc } from "firebase/firestore";
-import { addDoc, getDoc, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
+import { addDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 // Project files
 import { database } from "./firebaseSetup";
@@ -39,12 +39,18 @@ export async function readDocuments(collectionName) {
 }
 
 // -- Update
+export async function updateDocument(collectionName, data) {
+  const documentId = data.id;
+  const documentReference = doc(database, collectionName, documentId);
+
+  await updateDoc(documentReference, data);
+  return `document with id ${documentId} updated`;
+}
 
 // -- Delete
 export async function deleteDocument(collectionName, documentId) {
   const documentReference = doc(database, collectionName, documentId);
 
   await deleteDoc(documentReference);
-
   return `document with id ${documentId} deleted`;
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function Formulary({ onCreateStudent }) {
   const [name, setName] = useState("");
-  const [iteration, setIteration] = useState();
+  const [iteration, setIteration] = useState("");
   const [imageURL, setImageURL] = useState("");
 
   function onSubmit(event) {
