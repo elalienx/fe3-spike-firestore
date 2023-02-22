@@ -14,9 +14,9 @@ export default function StudentsPage({ state }) {
   async function onCreateStudent(data) {
     const documentId = await createDocument("students", data);
     const newStudent = { id: documentId, ...data };
-    const updatedStudentList = [...students, newStudent];
+    const result = [...students, newStudent];
 
-    setStudents(updatedStudentList);
+    setStudents(result);
   }
 
   return (

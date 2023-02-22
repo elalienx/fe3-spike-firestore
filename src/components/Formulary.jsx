@@ -1,11 +1,9 @@
 import { useState } from "react";
 
 export default function Formulary({ onCreateStudent }) {
-  const [name, setName] = useState("Nermeen");
-  const [iteration, setIteration] = useState(3);
-  const [imageURL, setImageURL] = useState(
-    "https://img.freepik.com/free-photo/portrait-happy-african-american-female-college-student-holding-notebooks-backpack-smiling-standing-yellow-background_1258-54844.jpg"
-  );
+  const [name, setName] = useState("");
+  const [iteration, setIteration] = useState();
+  const [imageURL, setImageURL] = useState("");
 
   function onSubmit(event) {
     const data = {
@@ -26,6 +24,7 @@ export default function Formulary({ onCreateStudent }) {
         Name:
         <input
           type="text"
+          required
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
@@ -35,6 +34,7 @@ export default function Formulary({ onCreateStudent }) {
         <input
           type="number"
           value={iteration}
+          required
           min="1"
           onChange={(event) => setIteration(event.target.value)}
         />
