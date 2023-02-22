@@ -8,7 +8,7 @@ import StudentsPage from "./pages/StudentsPage";
 export default function App() {
   // Local state
   const [status, setStatus] = useState(0); // 0: loading, 1: ready, 2: error
-  const [data, setData] = useState([]);
+  const [students, setStudents] = useState([]);
 
   // Methods
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function App() {
   }
 
   function onSuccess(data) {
-    setData(data);
+    setStudents(data);
     setStatus(1);
   }
 
@@ -34,7 +34,7 @@ export default function App() {
     <div className="App">
       <h1>Firebase Cloud Firestore</h1>
       {status === 0 && <p>Loading... ⏲️</p>}
-      {status === 1 && <StudentsPage data={data} />}
+      {status === 1 && <StudentsPage state={[students, setStudents]} />}
       {status === 2 && <p>Error ❌</p>}
     </div>
   );

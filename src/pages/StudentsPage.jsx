@@ -1,15 +1,28 @@
 // Project files
 import Formulary from "../components/Formulary";
 import ItemStudent from "../components/ItemStudent";
+import { createDocument } from "../scripts/fireStore";
 
-export default function StudentsPage({ data }) {
+export default function StudentsPage({ state }) {
+  const [students, setStudents] = state;
+
   // Components
-  const Items = data.map((item) => <ItemStudent key={item.id} item={item} />);
+  const Items = students.map((item) => (
+    <ItemStudent key={item.id} item={item} />
+  ));
+
+  async function onCreateStudent(data) {
+    const documentId = await createDocument("students", data);
+    const newStudent = { id: documentId, ...data };
+    const updatedStudentList = [...students, newStudent];
+
+    setStudents(updatedStudentList);
+  }
 
   return (
     <div id="students-page">
       <h2>Students of the Frontend Course</h2>
-      <Formulary />
+      <Formulary onCreateStudent={onCreateStudent} />
       {Items}
     </div>
   );

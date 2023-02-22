@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Formulary() {
+export default function Formulary({ onCreateStudent }) {
   const [name, setName] = useState("Nermeen");
   const [iteration, setIteration] = useState(3);
   const [imageURL, setImageURL] = useState(
@@ -8,9 +8,15 @@ export default function Formulary() {
   );
 
   function onSubmit(event) {
-    event.preventDefault();
+    const data = {
+      name: name,
+      iteration: iteration,
+      imageURL: imageURL,
+      hired: false,
+    };
 
-    console.log("data", name, iteration, imageURL);
+    event.preventDefault();
+    onCreateStudent(data);
   }
 
   return (

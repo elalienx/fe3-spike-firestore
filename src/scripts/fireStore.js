@@ -1,10 +1,20 @@
 // Node modules
-import { collection, getDoc, getDocs, doc } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc, addDoc } from "firebase/firestore";
 
 // Project files
 import { database } from "./firebaseSetup";
 
-// Methods
+// Methods (C.R.U.D.)
+// -- Create
+export async function createDocument(collectionName, data) {
+  const reference = collection(database, collectionName);
+  const document = await addDoc(reference, data);
+  const result = document.id;
+
+  return result;
+}
+
+// -- Read
 export async function readDocument(collectionName, documentId) {
   const reference = doc(database, collectionName, documentId);
   const snapshot = await getDoc(reference);
@@ -26,3 +36,7 @@ export async function readDocuments(collectionName) {
 
   return result;
 }
+
+// -- Update
+
+// -- Delete
