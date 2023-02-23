@@ -9,7 +9,7 @@ export default function StudentsPage({ state }) {
   const [students, setStudents] = state;
 
   // Properties
-  const COLLECTION_NAME = "students";
+  const COLLECTION_NAME = "coordinator";
 
   // Components
   const Items = students.map((item) => (
