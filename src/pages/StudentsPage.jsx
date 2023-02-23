@@ -1,18 +1,30 @@
 // Project files
 import Formulary from "../components/Formulary";
 import ItemStudent from "../components/ItemStudent";
-import { createDocument, updateDocument } from "../scripts/fireStore";
+import {
+  createDocument,
+  updateDocument,
+  deleteDocument,
+} from "../scripts/fireStore";
 
 export default function StudentsPage({ state }) {
   const [students, setStudents] = state;
 
+  // Properties
+  const COLLECTION_NAME = "students";
+
   // Components
   const Items = students.map((item) => (
-    <ItemStudent key={item.id} item={item} onUpdate={onUpdate} />
+    <ItemStudent
+      key={item.id}
+      item={item}
+      onUpdate={onUpdate}
+      onDelete={onDelete}
+    />
   ));
 
   async function onCreate(data) {
-    const documentId = await createDocument("students", data);
+    const documentId = await createDocument(COLLECTION_NAME, data);
     const newStudent = { id: documentId, ...data };
     const result = [...students, newStudent];
 
@@ -20,18 +32,22 @@ export default function StudentsPage({ state }) {
   }
 
   async function onUpdate(data) {
-    // 1. Copy the state
-    const cloneStudents = [...students];
+    const id = data.id;
+    const clonedStudents = [...students];
+    const itemIndex = clonedStudents.findIndex((item) => item.id === id);
 
-    // 2. Find what particular item we try to modify (Alexia is index 2)
-    const itemIndex = cloneStudents.findIndex((item) => item.id === data.id);
+    await updateDocument(COLLECTION_NAME, data);
+    clonedStudents[itemIndex] = data;
+    setStudents(clonedStudents);
+  }
 
-    // 3. Modify the item with the updated data
-    cloneStudents[itemIndex] = data;
+  async function onDelete(id) {
+    const clonedStudents = [...students];
+    const itemIndex = clonedStudents.findIndex((item) => item.id === id);
 
-    // replace the state
-    await updateDocument("students", data);
-    setStudents(cloneStudents);
+    await deleteDocument(COLLECTION_NAME, id);
+    clonedStudents.splice(itemIndex, 1);
+    setStudents(clonedStudents);
   }
 
   return (

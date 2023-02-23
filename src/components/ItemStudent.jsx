@@ -1,5 +1,5 @@
-export default function ItemStudent({ item, onUpdate }) {
-  const { name, iteration, hired } = item;
+export default function ItemStudent({ item, onUpdate, onDelete }) {
+  const { id, name, iteration, hired } = item;
 
   // Properties
   const showHired = hired
@@ -16,6 +16,7 @@ export default function ItemStudent({ item, onUpdate }) {
       <button onClick={() => onUpdate({ ...item, hired: !hired })}>
         Change job status
       </button>
+      <button onClick={() => onDelete(id)}>Delete</button>
     </article>
   );
 }

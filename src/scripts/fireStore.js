@@ -40,11 +40,19 @@ export async function readDocuments(collectionName) {
 
 // -- Update
 export async function updateDocument(collectionName, documentToUpdate) {
-  const reference = doc(database, collectionName, documentToUpdate.id);
+  const id = documentToUpdate.id;
+  const reference = doc(database, collectionName, id);
 
   await updateDoc(reference, documentToUpdate);
 
-  return `updated document with id ${documentToUpdate.id}`;
+  return `updated document with id ${id}`;
 }
 
 // -- Delete
+export async function deleteDocument(collectionName, id) {
+  const reference = doc(database, collectionName, id);
+
+  await deleteDoc(reference);
+
+  return `deleted document with id ${id}`;
+}
