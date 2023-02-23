@@ -8,7 +8,7 @@ export default function StudentsPage({ state }) {
 
   // Components
   const Items = students.map((item) => (
-    <ItemStudent key={item.id} item={item} onUpdate={onUpdate} />
+    <ItemStudent key={item.id} item={item} />
   ));
 
   async function onCreate(data) {
@@ -17,21 +17,6 @@ export default function StudentsPage({ state }) {
     const result = [...students, newStudent];
 
     setStudents(result);
-  }
-
-  async function onUpdate(data) {
-    // 1. Copy the state
-    const cloneStudents = [...students];
-
-    // 2. Find what particular item we try to modify (Alexia is index 2)
-    const itemIndex = cloneStudents.findIndex((item) => item.id === data.id);
-
-    // 3. Modify the item with the updated data
-    cloneStudents[itemIndex] = data;
-
-    // replace the state
-    await updateDocument("students", data);
-    setStudents(cloneStudents);
   }
 
   return (
