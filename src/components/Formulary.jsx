@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Formulary({ onCreateStudent }) {
+export default function Formulary({ onCreate }) {
   const [name, setName] = useState("");
   const [iteration, setIteration] = useState();
   const [imageURL, setImageURL] = useState("");
@@ -14,7 +14,7 @@ export default function Formulary({ onCreateStudent }) {
     };
 
     event.preventDefault();
-    onCreateStudent(data);
+    onCreate(data);
   }
 
   return (

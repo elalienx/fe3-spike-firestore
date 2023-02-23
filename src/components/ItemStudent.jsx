@@ -1,4 +1,4 @@
-export default function ItemStudent({ item }) {
+export default function ItemStudent({ item, onUpdate }) {
   const { name, iteration, hired } = item;
 
   // Properties
@@ -13,6 +13,9 @@ export default function ItemStudent({ item }) {
         <li>Iteration #{iteration}</li>
         <li>Is hired? {showHired}</li>
       </ul>
+      <button onClick={() => onUpdate({ ...item, hired: !hired })}>
+        Change job status
+      </button>
     </article>
   );
 }
