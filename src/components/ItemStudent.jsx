@@ -1,10 +1,12 @@
-export default function ItemStudent({ item, onUpdate, onDelete }) {
+export default function ItemStudent({ item, actions }) {
   const { id, name, iteration, hired } = item;
+  const [onUpdate, onDelete] = actions;
 
   // Properties
-  const showHired = hired
-    ? "I already have a job ✅"
-    : "You can hire me before is to late... for you! 😈";
+  const messageGood = "I already have a job ✅";
+  const messageBad = "You can hire me before is to late... for you! 😈";
+  const showHired = hired ? messageGood : messageBad;
+  const jobUpdatedData = { ...item, hired: !hired };
 
   return (
     <article className="item-student">
@@ -13,7 +15,7 @@ export default function ItemStudent({ item, onUpdate, onDelete }) {
         <li>Iteration #{iteration}</li>
         <li>Is hired? {showHired}</li>
       </ul>
-      <button onClick={() => onUpdate({ ...item, hired: !hired })}>
+      <button onClick={() => onUpdate(jobUpdatedData)}>
         Change job status
       </button>
       <button onClick={() => onDelete(id)}>Delete</button>

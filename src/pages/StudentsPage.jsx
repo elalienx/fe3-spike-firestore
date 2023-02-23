@@ -15,12 +15,7 @@ export default function StudentsPage({ state }) {
 
   // Components
   const Items = students.map((item) => (
-    <ItemStudent
-      key={item.id}
-      item={item}
-      onUpdate={onUpdate}
-      onDelete={onDelete}
-    />
+    <ItemStudent key={item.id} item={item} actions={[onUpdate, onDelete]} />
   ));
 
   async function onCreate(data) {
@@ -36,18 +31,18 @@ export default function StudentsPage({ state }) {
     const clonedStudents = [...students];
     const itemIndex = clonedStudents.findIndex((item) => item.id === id);
 
-    await updateDocument(COLLECTION_NAME, data);
     clonedStudents[itemIndex] = data;
     setStudents(clonedStudents);
+    await updateDocument(COLLECTION_NAME, data);
   }
 
   async function onDelete(id) {
     const clonedStudents = [...students];
     const itemIndex = clonedStudents.findIndex((item) => item.id === id);
 
-    await deleteDocument(COLLECTION_NAME, id);
     clonedStudents.splice(itemIndex, 1);
     setStudents(clonedStudents);
+    await deleteDocument(COLLECTION_NAME, id);
   }
 
   return (
