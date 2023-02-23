@@ -9,7 +9,7 @@ export default function StudentsPage({ state }) {
   const [students, setStudents] = state;
 
   // Properties
-  const COLLECTION_NAME = "coordinator";
+  const COLLECTION_NAME = "students";
 
   // Components
   const Items = students.map((item) => (
@@ -18,29 +18,18 @@ export default function StudentsPage({ state }) {
 
   async function onCreate(data) {
     const documentId = await createDocument(COLLECTION_NAME, data);
-    const newStudent = { id: documentId, ...data };
-    const result = [...students, newStudent];
 
-    setStudents(result);
+    dispatch({ action: "create", payload: { id: documentId, ...data } });
   }
 
   async function onUpdate(data) {
-    const id = data.id;
-    const clonedStudents = [...students];
-    const itemIndex = clonedStudents.findIndex((item) => item.id === id);
-
-    clonedStudents[itemIndex] = data;
-    setStudents(clonedStudents);
     await updateDocument(COLLECTION_NAME, data);
+    dispatch({ action: "update", payload: data });
   }
 
   async function onDelete(id) {
-    const clonedStudents = [...students];
-    const itemIndex = clonedStudents.findIndex((item) => item.id === id);
-
-    clonedStudents.splice(itemIndex, 1);
-    setStudents(clonedStudents);
     await deleteDocument(COLLECTION_NAME, id);
+    dispatch({ action: "delete", payload: id });
   }
 
   return (
