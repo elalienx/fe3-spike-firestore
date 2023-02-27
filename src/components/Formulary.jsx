@@ -1,11 +1,20 @@
+// Node modules
 import { useState } from "react";
 
-export default function Formulary({ onCreate }) {
+// Project files
+import { createDocument } from "../scripts/fireStore";
+import { useStudents } from "../state/StudentsProvider";
+
+export default function Formulary({ collectionName }) {
+  // Global state
+  const { dispatch } = useStudents();
+
+  // Local state
   const [name, setName] = useState("");
   const [iteration, setIteration] = useState("");
   const [imageURL, setImageURL] = useState("");
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     const data = {
       name: name,
       iteration: iteration,
@@ -14,7 +23,8 @@ export default function Formulary({ onCreate }) {
     };
 
     event.preventDefault();
-    onCreate(data);
+    const documentId = await createDocument(collectionName, data);
+    dispatch({ type: "create", payload: { id: documentId, ...data } });
   }
 
   return (

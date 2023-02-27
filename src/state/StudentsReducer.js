@@ -1,6 +1,4 @@
 export default function studentReducer(state, action) {
-  console.log("studentReducer() state, action", state, action);
-
   switch (action.type) {
     case "create":
       return onCreate(state, action);
@@ -16,12 +14,6 @@ export default function studentReducer(state, action) {
 }
 
 // Functional programming.
-/**
- * Seems like an overkill here (and it is)
- * But image if we need 10 lines of code to add a cart.
- * Example validating if the itemId exist in our inventory.
- * Then it becomes easier to read, outside the switch
- */
 function onCreate(state, action) {
   const newStudent = action.payload;
 
@@ -57,11 +49,3 @@ function onUpdate(state, action) {
 
   return clonedStudents;
 }
-
-// const id = data.id;
-// const clonedStudents = [...students];
-// const itemIndex = clonedStudents.findIndex((item) => item.id === id);
-
-// clonedStudents[itemIndex] = data;
-
-// setStudents(clonedStudents);
