@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // Project files
 import { readDocuments } from "./scripts/fireStore";
 import StudentsPage from "./pages/StudentsPage";
-import { StudentsProvider, useStudents } from "./state/StudentsProvider";
+import { useStudents } from "./state/StudentsProvider";
 
 export default function App() {
   // Global state
@@ -39,12 +39,10 @@ export default function App() {
   // React does not like when you manipulate the Context API state outside the <Provider>
   return (
     <div className="App">
-      <StudentsProvider>
-        <h1>Firebase Cloud Firestore</h1>
-        {status === 0 && <p>Loading... ⏲️</p>}
-        {status === 1 && <StudentsPage />}
-        {status === 2 && <p>Error ❌</p>}
-      </StudentsProvider>
+      <h1>Firebase Cloud Firestore</h1>
+      {status === 0 && <p>Loading... ⏲️</p>}
+      {status === 1 && <StudentsPage />}
+      {status === 2 && <p>Error ❌</p>}
     </div>
   );
 }

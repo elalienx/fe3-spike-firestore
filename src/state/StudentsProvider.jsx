@@ -13,9 +13,9 @@ export function StudentsProvider({ children }) {
   const [students, dispatch] = useReducer(studentReducer, []);
 
   // Properties
-  const values = { students, dispatch };
+  const value = { students, dispatch };
 
-  return <Context.Provider values={values}>{children}</Context.Provider>;
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 // For each child that uses the global state
