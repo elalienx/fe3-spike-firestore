@@ -4,10 +4,12 @@ export default function studentReducer(state, action) {
   switch (action.type) {
     case "create":
       return onCreate(state, action);
-    case "update":
-      return onUpdate(state, action);
     case "delete":
       return onDelete(state, action);
+    case "initializeArray":
+      return onInitializeArray(action);
+    case "update":
+      return onUpdate(state, action);
     default:
       throw new Error("Unhandled action:", action.type);
   }
@@ -26,6 +28,25 @@ function onCreate(state, action) {
   return [...state, newStudent];
 }
 
+function onDelete(state, action) {
+  const id = action.payload;
+  const clonedStudents = [...state];
+  const itemIndex = clonedStudents.findIndex((item) => item.id === id);
+
+  clonedStudents.splice(itemIndex, 1);
+
+  return clonedStudents;
+}
+
+function onInitializeArray(action) {
+  const newStudents = action.payload;
+
+  // Refactor
+  // Verify that every student has an id
+
+  return newStudents;
+}
+
 function onUpdate(state, action) {
   const id = action.payload;
   const clonedStudents = [...state];
@@ -33,13 +54,4 @@ function onUpdate(state, action) {
   clonedStudents[itemIndex] = data;
 
   return clonedStudents;
-}
-
-function onDelete(state, action) {
-  const id = action;
-  //
-  //
-  //
-
-  return state;
 }
