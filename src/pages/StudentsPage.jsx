@@ -18,18 +18,17 @@ export default function StudentsPage({ state }) {
 
   async function onCreate(data) {
     const documentId = await createDocument(COLLECTION_NAME, data);
-
-    dispatch({ action: "create", payload: { id: documentId, ...data } });
+    dispatch({ type: "create", payload: { id: documentId, ...data } });
   }
 
   async function onUpdate(data) {
     await updateDocument(COLLECTION_NAME, data);
-    dispatch({ action: "update", payload: data });
+    dispatch({ type: "update", payload: data });
   }
 
   async function onDelete(id) {
     await deleteDocument(COLLECTION_NAME, id);
-    dispatch({ action: "delete", payload: id });
+    dispatch({ type: "delete", payload: id });
   }
 
   return (

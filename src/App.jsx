@@ -22,7 +22,7 @@ export default function App() {
   }
 
   function onSuccess(data) {
-    setStudents(data);
+    dispatch();
     setStatus(1);
   }
 
