@@ -56,3 +56,10 @@ function onUpdate(state, action) {
 
   return clonedStudents;
 }
+
+// const id = data.id;
+// const clonedStudents = [...students];
+// const itemIndex = clonedStudents.findIndex((item) => item.id === id);
+
+// clonedStudents[itemIndex] = data;
+// setStudents(clonedStudents);
