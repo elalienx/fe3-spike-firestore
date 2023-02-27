@@ -48,10 +48,11 @@ function onInitializeArray(action) {
 }
 
 function onUpdate(state, action) {
-  const id = action.payload;
+  const updatedStudent = action.type;
+  const id = updatedStudent.id;
   const clonedStudents = [...state];
   const itemIndex = clonedStudents.findIndex((item) => item.id === id);
-  clonedStudents[itemIndex] = data;
+  clonedStudents[itemIndex] = updatedStudent;
 
   return clonedStudents;
 }

@@ -4,9 +4,11 @@ import ItemStudent from "../components/ItemStudent";
 import { createDocument } from "../scripts/fireStore";
 import { updateDocument } from "../scripts/fireStore";
 import { deleteDocument } from "../scripts/fireStore";
+import { useStudents } from "../state/StudentsProvider";
 
-export default function StudentsPage({ state }) {
-  const [students, setStudents] = state;
+export default function StudentsPage() {
+  // Global state
+  const { students, dispatch } = useStudents();
 
   // Properties
   const COLLECTION_NAME = "students";

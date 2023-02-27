@@ -11,7 +11,7 @@ export default function ItemStudent({ item, actions }) {
   // Methods
   function onClickDelete(id) {
     const message = `Are you sure you want to delete ${name}`;
-    const result = confirm(message);
+    const result = window.confirm(message);
 
     if (result) onDelete(id);
 

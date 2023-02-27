@@ -17,12 +17,6 @@ export default function Formulary({ onCreate }) {
     onCreate(data);
   }
 
-  async function onCreate(data) {
-    const documentId = await createDocument(COLLECTION_NAME, data);
-
-    dispatch({ action: "create", payload: { id: documentId, ...data } });
-  }
-
   return (
     <form onSubmit={(event) => onSubmit(event)}>
       <h3>Add a new student</h3>
