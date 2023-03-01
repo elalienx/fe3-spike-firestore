@@ -1,6 +1,7 @@
 // Project files
 import imagePlaceholder from "../assets/image-placeholder.jpg";
 import { deleteDocument, updateDocument } from "../scripts/fireStore";
+import { uploadFile, downloadFile } from "../scripts/cloudStorage";
 import { useStudents } from "../state/StudentsProvider";
 
 export default function ItemStudent({ item, collectionName }) {
@@ -34,6 +35,19 @@ export default function ItemStudent({ item, collectionName }) {
     dispatch({ type: "update", payload: data });
   }
 
+  async function onUploadImage(event) {
+    const file = event.target.files[0];
+    const filePath = `students/${id}_${file.name}`;
+
+    await uploadFile(file, filePath);
+    const url = await downloadFile(filePath);
+    console.log("url", url);
+
+    const data = { ...item, imageURL: url };
+    await updateDocument(collectionName, data);
+    dispatch({ type: "update", payload: data });
+  }
+
   return (
     <article className="item-student">
       <img src={imageSource} alt="Student profile" />
@@ -45,6 +59,12 @@ export default function ItemStudent({ item, collectionName }) {
         </ul>
         <button onClick={() => onUpdate()}>Change job status</button>
         <button onClick={() => onDelete(id)}>Delete</button>
+        {/* We can hide the input field and replace with a normal button */}
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={(event) => onUploadImage(event)}
+        />
       </div>
     </article>
   );
