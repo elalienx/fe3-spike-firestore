@@ -19,6 +19,7 @@ export default function StudentsPage() {
     <div id="students-page">
       <h2>Students of the Frontend Course</h2>
       <Formulary collectionName={COLLECTION_NAME} />
+      <hr />
       {Items}
     </div>
   );
