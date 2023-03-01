@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { readDocuments } from "./scripts/fireStore";
 import StudentsPage from "./pages/StudentsPage";
 import { useStudents } from "./state/StudentsProvider";
+import "./styles/style.css";
 
 export default function App() {
   // Global state
