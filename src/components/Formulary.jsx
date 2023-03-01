@@ -1,11 +1,14 @@
 // Node modules
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 // Project files
-import { createDocument } from "../scripts/fireStore";
+import { createDocumentWithManualId } from "../scripts/fireStore";
 import { useStudents } from "../state/StudentsProvider";
+import { uploadFile, downloadFile } from "../scripts/cloudStorage";
 
 export default function Formulary({ collectionName }) {
+  console.log("Formulary.jsx is created!!!");
   // Global state
   const { dispatch } = useStudents();
 
@@ -14,17 +17,33 @@ export default function Formulary({ collectionName }) {
   const [iteration, setIteration] = useState("");
   const [imageURL, setImageURL] = useState("");
 
+  // Property
+  const manualId = uuidv4() + "_" + Date.now();
+
   async function onSubmit(event) {
-    const data = {
+    const data = generateStudentProfile();
+
+    event.preventDefault();
+    await createDocumentWithManualId(collectionName, manualId, data);
+    dispatch({ type: "create", payload: data });
+  }
+
+  async function onChooseImage(event) {
+    const file = event.target.files[0];
+    const filePath = `students/${manualId}_${file.name}`;
+
+    await uploadFile(file, filePath);
+    setImageURL(await downloadFile(filePath));
+  }
+
+  function generateStudentProfile() {
+    return {
+      id: manualId,
       name: name,
       iteration: iteration,
       imageURL: imageURL,
       hired: false,
     };
-
-    event.preventDefault();
-    const documentId = await createDocument(collectionName, data);
-    dispatch({ type: "create", payload: { id: documentId, ...data } });
   }
 
   return (
@@ -50,11 +69,11 @@ export default function Formulary({ collectionName }) {
         />
       </label>
       <label>
-        Paste the link for the image:
+        Upload your profile picture:
         <input
-          type="text"
-          value={imageURL}
-          onChange={(event) => setImageURL(event.target.value)}
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={(event) => onChooseImage(event)}
         />
       </label>
       <button>Submit</button>
