@@ -12,19 +12,22 @@ export default function Formulary({ collectionName }) {
   // Local state
   const [name, setName] = useState("");
   const [iteration, setIteration] = useState("");
-  const [imageURL, setImageURL] = useState("");
 
   async function onSubmit(event) {
-    const data = {
-      name: name,
-      iteration: iteration,
-      imageURL: imageURL,
-      hired: false,
-    };
+    const data = generateProfile();
 
     event.preventDefault();
     const documentId = await createDocument(collectionName, data);
     dispatch({ type: "create", payload: { id: documentId, ...data } });
+  }
+
+  function generateProfile() {
+    return {
+      name: name,
+      iteration: iteration,
+      imageURL: "",
+      hired: false,
+    };
   }
 
   return (
@@ -47,14 +50,6 @@ export default function Formulary({ collectionName }) {
           required
           min="1"
           onChange={(event) => setIteration(event.target.value)}
-        />
-      </label>
-      <label>
-        Paste the link for the image:
-        <input
-          type="text"
-          value={imageURL}
-          onChange={(event) => setImageURL(event.target.value)}
         />
       </label>
       <button>Submit</button>
