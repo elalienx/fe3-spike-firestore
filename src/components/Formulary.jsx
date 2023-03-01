@@ -8,7 +8,6 @@ import { useStudents } from "../state/StudentsProvider";
 import { uploadFile, downloadFile } from "../scripts/cloudStorage";
 
 export default function Formulary({ collectionName }) {
-  console.log("Formulary.jsx is created!!!");
   // Global state
   const { dispatch } = useStudents();
 
@@ -16,6 +15,7 @@ export default function Formulary({ collectionName }) {
   const [name, setName] = useState("");
   const [iteration, setIteration] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [buttonEnabled, setButtonEnabled] = useState(true);
 
   // Property
   const manualId = uuidv4() + "_" + Date.now();
@@ -32,8 +32,10 @@ export default function Formulary({ collectionName }) {
     const file = event.target.files[0];
     const filePath = `students/${manualId}_${file.name}`;
 
+    setButtonEnabled(false);
     await uploadFile(file, filePath);
     setImageURL(await downloadFile(filePath));
+    setButtonEnabled(true);
   }
 
   function generateStudentProfile() {
@@ -74,9 +76,10 @@ export default function Formulary({ collectionName }) {
           type="file"
           accept="image/png, image/jpeg"
           onChange={(event) => onChooseImage(event)}
+          required
         />
       </label>
-      <button>Submit</button>
+      <button disabled={!buttonEnabled}>Submit</button>
     </form>
   );
 }
