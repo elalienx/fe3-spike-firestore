@@ -41,7 +41,6 @@ export default function ItemStudent({ item, collectionName }) {
 
     await uploadFile(file, filePath);
     const url = await downloadFile(filePath);
-    console.log("url", url);
 
     const data = { ...item, imageURL: url };
     await updateDocument(collectionName, data);
@@ -60,11 +59,14 @@ export default function ItemStudent({ item, collectionName }) {
         <button onClick={() => onUpdate()}>Change job status</button>
         <button onClick={() => onDelete(id)}>Delete</button>
         {/* We can hide the input field and replace with a normal button */}
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          onChange={(event) => onUploadImage(event)}
-        />
+        <label className="field-image">
+          <input
+            type="file"
+            accept="image/png, image/jpeg"
+            onChange={(event) => onUploadImage(event)}
+          />
+          <span className="button">Upload image</span>
+        </label>
       </div>
     </article>
   );

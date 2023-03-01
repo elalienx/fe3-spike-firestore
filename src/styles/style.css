@@ -20,3 +20,7 @@ h3 {
   height: 180px;
   object-fit: cover;
 }
+
+.item-student .field-image input {
+  display: none;
+}
