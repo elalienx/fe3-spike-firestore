@@ -15,7 +15,7 @@ export default function Formulary({ collectionName }) {
   const [name, setName] = useState("");
   const [iteration, setIteration] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [buttonEnabled, setButtonEnabled] = useState(true);
+  const [buttonEnabled, setButtonEnabled] = useState(true); // to avoid the "race condition"
 
   // Property
   const manualId = uuidv4() + "_" + Date.now();
