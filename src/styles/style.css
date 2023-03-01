@@ -1,0 +1,22 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+}
+
+.item-student {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.item-student img {
+  width: 240px;
+  height: 180px;
+  object-fit: cover;
+}
