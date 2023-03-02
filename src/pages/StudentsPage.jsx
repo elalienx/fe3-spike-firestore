@@ -5,10 +5,10 @@ import { useStudents } from "../state/StudentsProvider";
 
 export default function StudentsPage() {
   // Global state
-  const { students, dispatch } = useStudents();
+  const { students } = useStudents();
 
   // Properties
-  const COLLECTION_NAME = "students";
+  const COLLECTION_NAME = "students/6DXMHUbyhj8h3uJHRvbB/collection";
 
   // Components
   const Items = students.map((item) => (
