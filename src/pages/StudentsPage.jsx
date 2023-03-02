@@ -5,7 +5,7 @@ import { useStudents } from "../state/StudentsProvider";
 
 export default function StudentsPage() {
   // Global state
-  const { students, dispatch } = useStudents();
+  const { students } = useStudents();
 
   // Properties
   const COLLECTION_NAME = "students";
